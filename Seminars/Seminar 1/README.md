@@ -407,7 +407,7 @@ void readPoint(Point& p)
 
 #### **Създаване на динамични обекти**
  ```c++
-	Point* ptr = new Box();
+	Point* ptr = new Point();
 
 	(*ptr).x = 3;
 	(*ptr).y = 1;
@@ -434,7 +434,7 @@ int main()
 #### **Масиви от обекти**
  ```c++
     Point arr1[30]; 
-	Point* arr2 = new Box[20] 
+	Point* arr2 = new Point[20] 
 
 	delete[] arr2;
 ```
