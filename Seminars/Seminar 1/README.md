@@ -477,5 +477,120 @@ A* f(...) {
 ```
 - за да се върне по указател, трябва обектът/инстанцията да съществува извън scope-а на функцията или да е създаден в динамичната памет
 
+## **Представяне в паметта и подравняване.**
+
+* в паметта променливите са разположени в същия ред, в който са декларирани в структурата
+* всеки байт в паметта се достъпва индивидуално
+* процесорът може да чете по няколко байта наведнъж (memory read cycle)
+* колко памет може да прочете за един memory read cycle-a зависи от архектурата му (x32 - 4 bytes, x64 - 8 bytes);
+* по тази причина е необходимо подравняване (padding)
+
+### Подравняване
+
+* размерът на структурата трябва да се дели на големината на **най-голямата примитивна член-данна**
+* структурата се подравнява по големината на най-голямата си примитивна член-данна
+* всяка член-данна се намира на адрес (започвакйи от 0), който се дели на големината на член-данната
+
+-> За да бъде минимална паметта, която ползва една структура, подреждаме член-данните по големина
+
+*Примери*
+<img  style="object-fit:contain;"  align="right"  width="250"  height="220"  src="img\Screenshot 2024-02-23 152636.png">
+
+```cpp
+struct A {
+	char a;	
+	short b; 
+	int c; 
+}; 
+// sizeof(A) = 8
+// alignof(A) = 4
+```
+
+<img style="object-fit:contain;"  align="right"  width="200"  height="180"  src="img\Screenshot 2024-02-23 154620.png">
+
+```cpp
+struct B {
+	char a;
+	int c;
+	short b;
+};
+// sizeof(B) = 12
+// alignof(B) = 4
+```
+
+- масивите се представят като последователност от n елемента
+<img style="object-fit:contain;"  align="right"  width="200"  height="170"  src="img\Screenshot 2024-02-23 155244.png">
+
+```cpp
+struct C {
+	short b;
+	char a[5];
+	int c;
+};
+// sizeof(C) = 12
+// alignof(C) = 4
+```
+- празните структури имат размер 1, за да имат място в паметта
+<img  style="object-fit:contain;"  align="right"  width="150"  height="150"  src="img\Screenshot 2024-02-23 160257.png">
+
+```cpp
+struct D {
+
+};
+// sizeof(D) = 1
+// alignof(D) = 1
+```
+<img  style="object-fit:contain;"  align="right"  width="300"  height="150"  src="img\Screenshot 2024-02-23 161912.png">
+
+```cpp
+struct E {
+	double a;
+	int b;
+};
+// sizeof(E) = 16
+// alignof(E) = 8
+```
+- структурите запазват целостта си (подравняването обаче е по най-голямата примитивна член-данна)
+
+<img  style="object-fit:contain;"  align="right"  width="280"  height="170"  src="img\Screenshot 2024-02-23 162259.png">
+
+```cpp
+struct F {
+	char a;
+	E e;
+	char c;
+};
+// sizeof(F) = 32
+// alignof(F) = 8
+```
+<img  style="object-fit:contain;"  align="right"  width="300"  height="200"  src="img\Screenshot 2024-02-23 162606.png">
+
+```cpp
+struct G {
+	F f[2];
+	char ch[3];
+};
+// sizeof(G) = 72
+// alignof(G) = 8
+
+
+
+```
+
+- ако като последна член-данна сложим масив, без да определим размера му, той заема padding-а до края на структурата
+
+<img  style="object-fit:contain;"  align="right"  width="300"  height="200"  src="img\Screenshot 2024-02-23 163157.png">
+
+```cpp
+struct H
+{
+	G g;
+	char c1[4];
+	char c2[];
+};
+// sizeof(H) = 80
+// alignof(H) = 8
+```
+
 ## Задачи
 **Зад 1.** Да се прочетат от конзолата N триъгълника и да се изведат, сортирани по лицата им.
