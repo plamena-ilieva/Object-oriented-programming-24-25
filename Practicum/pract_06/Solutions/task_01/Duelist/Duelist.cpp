@@ -3,7 +3,8 @@
 void Duelist::copyFrom(const Duelist& other) {
     int otherNameLen = strlen(other.name);
     name = new char[otherNameLen + 1];
-
+    strcpy(name, other.name);
+    
     deck = other.deck;
 }
 
