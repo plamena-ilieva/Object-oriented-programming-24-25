@@ -1,14 +1,6 @@
 #include <iostream>
 
 class MonsterCard {
-private:
-    char* name = nullptr;
-    unsigned atkPoints = 0;
-    unsigned defPoints = 0;
-
-    void copyFrom(const MonsterCard& other);
-    void free();
-
 public:
     MonsterCard(const char* name, unsigned atkPoints, unsigned defPoints);
 
@@ -24,4 +16,13 @@ public:
     const char* getName() const;
     unsigned getAtkPoints() const;
     unsigned getDefPoints() const;
+
+private:
+    char* name = nullptr;
+    unsigned atkPoints = 0;
+    unsigned defPoints = 0;
+
+    void copyFrom(const MonsterCard& other);
+    void free();
+
 };

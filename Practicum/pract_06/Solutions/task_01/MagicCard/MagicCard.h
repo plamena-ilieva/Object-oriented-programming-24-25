@@ -13,11 +13,6 @@ enum class Type {
 };
 
 class MagicCard {
-private:
-    char name[MagicCardConstants::NAME_LEN] = "";
-    char effect[MagicCardConstants::EFFECT_LEN] = "";
-    Type type = Type::undef;
-
 public:
     MagicCard() = default;
     
@@ -30,4 +25,9 @@ public:
     const char* getName() const;
     const char* getEffect() const;
     Type getType() const;
+
+private:
+    char name[MagicCardConstants::NAME_LEN] = "";
+    char effect[MagicCardConstants::EFFECT_LEN] = "";
+    Type type = Type::undef;
 };

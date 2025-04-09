@@ -6,9 +6,6 @@ namespace BooksListConstants {
 }
 
 class BooksList {
-    Book books[BooksListConstants::MAX_BOOKS];
-    int currentCount = BooksListConstants::MIN_COUNT;
-
 public:
 
     BooksList() = default;
@@ -18,4 +15,8 @@ public:
     void addBook(const Book& book);
     void saveBooksToFile(const char* fileName) const;
     void printBooks() const;
+
+private:
+    Book books[BooksListConstants::MAX_BOOKS];
+    int currentCount = BooksListConstants::MIN_COUNT;
 };

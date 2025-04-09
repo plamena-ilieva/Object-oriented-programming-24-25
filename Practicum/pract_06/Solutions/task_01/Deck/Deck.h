@@ -6,15 +6,6 @@ namespace DeckConstants {
 }
 
 class Deck {
-private:
-    MonsterCard monsterCards[DeckConstants::MAX_CARDS];
-    MagicCard magicCards[DeckConstants::MAX_CARDS];
-
-    unsigned currCountMonsterCards = 0;
-    unsigned currCountMagicCards = 0;
-
-    bool isValidIndex(int index, int max) const;
-
 public:
     unsigned getCurrCountMonsterCards() const;
     unsigned getCurrCountMagicCards() const;
@@ -32,4 +23,14 @@ public:
     void removeMagicCard(int index);
 
     void sortMonsterCards(bool (*predicate)(const MonsterCard&, const MonsterCard&));
+
+private:
+    MonsterCard monsterCards[DeckConstants::MAX_CARDS];
+    MagicCard magicCards[DeckConstants::MAX_CARDS];
+
+    unsigned currCountMonsterCards = 0;
+    unsigned currCountMagicCards = 0;
+
+    bool isValidIndex(int index, int max) const;
+
 };

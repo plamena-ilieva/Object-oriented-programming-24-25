@@ -1,12 +1,6 @@
 #include "Deck/Deck.h"
 
 class Duelist {
-private:
-    char* name = nullptr;
-    Deck deck;
-
-    void copyFrom(const Duelist& other);
-    void free();
 
 public:
     Duelist() = default;
@@ -30,4 +24,12 @@ public:
     void removeMagicCard(int index);
 
     void sortMonsterCards(bool (*predicate)(const MonsterCard&, const MonsterCard&));
+
+private:
+    char* name = nullptr;
+    Deck deck;
+
+    void copyFrom(const Duelist& other);
+    void free();
+
 };

@@ -34,15 +34,6 @@ enum class HairColor {
 };
 
 class Student {
-    char firstName[StudentConstants::STR_SIZE] = "";
-    char lastName[StudentConstants::STR_SIZE] = "";
-    int fn = StudentConstants::FN_INIT_VAL;
-    double averageGrade = StudentConstants::GRADE_INIT_VAL;
-    HairColor hairColor = HairColor::Undefined;
-
-    bool isValidName(const char* name) const;
-    bool isValidFn(int fn) const;
-
 public:
     Student() = default;
     Student(const char* firstName, const char* lastName, int fn, double averageGrade, HairColor HairColor);
@@ -70,4 +61,14 @@ public:
     void load(std::ifstream& ifs); 
 
     void print() const;
+
+private:
+    char firstName[StudentConstants::STR_SIZE] = "";
+    char lastName[StudentConstants::STR_SIZE] = "";
+    int fn = StudentConstants::FN_INIT_VAL;
+    double averageGrade = StudentConstants::GRADE_INIT_VAL;
+    HairColor hairColor = HairColor::Undefined;
+
+    bool isValidName(const char* name) const;
+    bool isValidFn(int fn) const;
 };

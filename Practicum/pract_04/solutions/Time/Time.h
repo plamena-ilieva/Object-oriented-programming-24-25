@@ -9,17 +9,7 @@ public:
 		PM,
 		Twenty_Four,
 	};
-
-private:
-	int hour = 0;
-	int minutes = 0;
-	int seconds = 0;
-	TimeFormat timeFormat = TimeFormat::Twenty_Four;
-
-	bool isHourValid(int hour) const;
-	bool isMinutesValid(int minutes) const;
-	bool isSecondsValid(int seconds) const;
-public:
+	
 	Time() = default;
 	Time(int hour, int minutes, int seconds);
 
@@ -43,4 +33,14 @@ public:
 	int remainingSecondsToMidnight() const;
 	Time diff(const Time& other) const;
 	int secondsFromBeggingOfTheDay() const;
+
+private:
+	int hour = 0;
+	int minutes = 0;
+	int seconds = 0;
+	TimeFormat timeFormat = TimeFormat::Twenty_Four;
+
+	bool isHourValid(int hour) const;
+	bool isMinutesValid(int minutes) const;
+	bool isSecondsValid(int seconds) const;
 };
