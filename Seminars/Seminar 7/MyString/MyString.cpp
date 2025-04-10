@@ -18,6 +18,22 @@ void MyString::free()
 	size = cap = 0;
 }
 
+void MyString::resize()
+{
+	size_t newCap = (cap + 1) * 2;
+	char* newData = new char[newCap];
+	cap = newCap - 1;
+	std::strcpy(newData, data);
+	delete[] data;
+	data = newData;
+}
+
+MyString::MyString(unsigned cap) {
+	this->cap = cap;
+	data = new char[cap + 1];
+	size = 0;
+}
+
 MyString::MyString() : MyString("")
 {
 }
@@ -84,6 +100,42 @@ MyString& MyString::operator+=(const MyString& other)
 	delete[] data;
 	data = buff;
 	return *this;
+}
+
+char& MyString::operator[](unsigned ind)
+{
+	return data[ind];
+}
+
+char MyString::operator[](unsigned ind) const
+{
+	return data[ind];
+}
+
+MyString operator+(const MyString& lhs, const MyString& rhs)
+{
+	size_t cap = std::max(15, (int)nextPowerOfTwo(lhs.size + rhs.size));
+	MyString res(cap);
+	res += lhs;
+	res += rhs;
+	return res;
+}
+
+std::istream& operator>>(std::istream& is, MyString& str)
+{
+	char buff[1024];
+	is.getline(buff, 1024);
+	size_t size = strlen(buff);
+
+	if (size > str.size) {
+		size_t cap = std::max(15, (int)nextPowerOfTwo(size));
+		delete[] str.data;
+		str.data = new char[cap + 1];
+		str.cap = cap;
+	}
+
+	strcpy(str.data, buff);
+	str.size = size;
 }
 
 std::ostream& operator<<(std::ostream& os, const MyString& str)

@@ -12,6 +12,7 @@ class MyString
 
 	explicit MyString(unsigned cap);
 
+
 public:
 	MyString();
 	MyString(const char* str);
