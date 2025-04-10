@@ -18,9 +18,8 @@ void MyString::free()
 	size = cap = 0;
 }
 
-void MyString::resize()
+void MyString::resize(unsigned newCap)
 {
-	size_t newCap = (cap + 1) * 2;
 	char* newData = new char[newCap];
 	cap = newCap - 1;
 	std::strcpy(newData, data);
@@ -32,10 +31,12 @@ MyString::MyString(unsigned cap) {
 	this->cap = cap;
 	data = new char[cap + 1];
 	size = 0;
+	data[0] = '\0';
 }
 
 MyString::MyString() : MyString("")
 {
+
 }
 
 MyString::MyString(const char* str)
@@ -48,7 +49,7 @@ MyString::MyString(const char* str)
 		return;
 	}
 	size = strlen(str);
-	cap = std::max((int)nextPowerOfTwo(size), 16) - 1;
+	cap = calcCapacity(size);
 	data = new char[cap + 1];
 	strcpy(data, str);
 }
@@ -73,7 +74,7 @@ MyString::~MyString()
 	free();
 }
 
-unsigned MyString::lenght() const
+unsigned MyString::length() const
 {
 	return size;
 }
@@ -85,20 +86,13 @@ const char* MyString::c_str() const
 
 MyString& MyString::operator+=(const MyString& other)
 {
-	if (size + other.size <= cap) {
-		size += other.size;
-		strcat(data, other.data);
-		return *this;
+	unsigned newSize = size + other.size;
+	if (newSize > cap) {
+		resize(calcCapacity(newSize));
 	}
 
 	size += other.size;
-	cap = nextPowerOfTwo(size) - 1;
-	char* buff = new char[cap + 1];
-	strcpy(buff, data);
-	strcat(buff, other.data);
-
-	delete[] data;
-	data = buff;
+	strcat(data, other.data);
 	return *this;
 }
 
@@ -114,7 +108,7 @@ char MyString::operator[](unsigned ind) const
 
 MyString operator+(const MyString& lhs, const MyString& rhs)
 {
-	size_t cap = std::max(15, (int)nextPowerOfTwo(lhs.size + rhs.size));
+	size_t cap = calcCapacity(lhs.size + rhs.size);
 	MyString res(cap);
 	res += lhs;
 	res += rhs;
@@ -128,7 +122,7 @@ std::istream& operator>>(std::istream& is, MyString& str)
 	size_t size = strlen(buff);
 
 	if (size > str.size) {
-		size_t cap = std::max(15, (int)nextPowerOfTwo(size));
+		size_t cap = calcCapacity(size);
 		delete[] str.data;
 		str.data = new char[cap + 1];
 		str.cap = cap;
@@ -136,11 +130,43 @@ std::istream& operator>>(std::istream& is, MyString& str)
 
 	strcpy(str.data, buff);
 	str.size = size;
+
+	return is;
 }
 
 std::ostream& operator<<(std::ostream& os, const MyString& str)
 {
 	return os << str.c_str();
+}
+
+bool operator==(const MyString& lhs, const MyString& rhs)
+{
+	return std::strcmp(lhs.c_str(), rhs.c_str()) == 0;
+}
+
+bool operator!=(const MyString& lhs, const MyString& rhs)
+{
+	return std::strcmp(lhs.c_str(), rhs.c_str()) != 0;
+}
+
+bool operator<(const MyString& lhs, const MyString& rhs)
+{
+	return std::strcmp(lhs.c_str(), rhs.c_str()) < 0;
+}
+
+bool operator<=(const MyString& lhs, const MyString& rhs)
+{
+	return std::strcmp(lhs.c_str(), rhs.c_str()) <= 0;
+}
+
+bool operator>(const MyString& lhs, const MyString& rhs)
+{
+	return std::strcmp(lhs.c_str(), rhs.c_str()) > 0;
+}
+
+bool operator>=(const MyString& lhs, const MyString& rhs)
+{
+	return std::strcmp(lhs.c_str(), rhs.c_str()) >= 0;
 }
 
 unsigned nextPowerOfTwo(unsigned n)
@@ -153,4 +179,9 @@ unsigned nextPowerOfTwo(unsigned n)
 	}
 
 	return n + 1;
+}
+
+unsigned calcCapacity(unsigned size)
+{
+	return std::max((int)nextPowerOfTwo(size), 16) - 1;
 }

@@ -8,10 +8,9 @@ class MyString
 
 	void copyFrom(const MyString& other);
 	void free();
-	void resize();
+	void resize(unsigned newCap);
 
 	explicit MyString(unsigned cap);
-
 
 public:
 	MyString();
@@ -20,7 +19,7 @@ public:
 	MyString& operator=(const MyString& other);
 	~MyString();
 
-	unsigned lenght() const;
+	unsigned length() const;
 	const char* c_str() const;
 
 	MyString& operator+=(const MyString& other);
@@ -35,4 +34,12 @@ public:
 
 std::ostream& operator<<(std::ostream&, const MyString& lhs);
 
+bool operator==(const MyString& lhs, const MyString& rhs);
+bool operator!=(const MyString& lhs, const MyString& rhs);
+bool operator<(const MyString& lhs, const MyString& rhs);
+bool operator<=(const MyString& lhs, const MyString& rhs);
+bool operator>(const MyString& lhs, const MyString& rhs);
+bool operator>=(const MyString& lhs, const MyString& rhs);
+
 unsigned nextPowerOfTwo(unsigned n);
+unsigned calcCapacity(unsigned size);
