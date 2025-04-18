@@ -8,11 +8,9 @@ public:
     MyString(const char* data);
 
     MyString(const MyString& other);
-    MyString(MyString&& other);
 
     MyString& operator=(const MyString& other);
 
-    MyString& operator=(MyString&& other);
     ~MyString();
 
     size_t getCapacity() const;
@@ -35,8 +33,6 @@ private:
 
     void free();
     void copyFrom(const MyString& other);
-
-    void moveFrom(MyString&& other);
 
     char* _data;
     size_t _size;

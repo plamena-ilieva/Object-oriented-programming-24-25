@@ -37,33 +37,11 @@ MyString::MyString(size_t stringLength) {
 MyString::MyString(const MyString& other) {
     copyFrom(other);
 }
-MyString::MyString(MyString&& other) {
-    moveFrom(std::move(other));
-}
-
-void MyString::moveFrom(MyString&& other) {
-    _data = other._data;
-    other._data = nullptr;
-
-    _size = other._size;
-    other._size = 0;
-
-    _allocatedDataSize = other._allocatedDataSize;
-    other._allocatedDataSize = 0;
-}
 
 MyString& MyString::operator=(const MyString& other) {
     if (this != &other) {
         free();
         copyFrom(other);
-    }
-    return *this;
-}
-
-MyString& MyString::operator=(MyString&& other) {
-    if (this != &other) {
-        free();
-        moveFrom(std::move(other));
     }
     return *this;
 }
