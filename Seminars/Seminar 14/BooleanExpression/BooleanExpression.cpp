@@ -75,7 +75,7 @@ struct Negation : UnaryOperation
 	Negation(BooleanExpression* expr) : UnaryOperation(expr) {}
 	virtual BooleanExpression* clone() const override
 	{
-		return new Negation(expr);
+		return new Negation(expr->clone());
 	}
 	bool eval(const BooleanInterpretation& interpet) const override
 	{
@@ -109,7 +109,7 @@ struct Conjunction : BinaryOperation
 
 	virtual BooleanExpression* clone() const override
 	{
-		return new Conjunction(left, right);
+		return new Conjunction(left->clone(), right->clone());
 	}
 
 	bool eval(const BooleanInterpretation& interpet) const override
@@ -125,7 +125,7 @@ struct Disjunction : BinaryOperation
 
 	virtual BooleanExpression* clone() const override
 	{
-		return new Disjunction(left, right);
+		return new Disjunction(left->clone(), right->clone());
 	}
 	bool eval(const BooleanInterpretation& interpet) const override
 	{
